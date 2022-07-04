@@ -1,0 +1,24 @@
+hello,react!
+
+SPA - Single page Application
+
+Component 들을 얼마나 편하게 배치할 수 있고, 잘 쪼개고, 잘 연결하는가 - 리액트
+
+React - SPA 속의 컴포넌트를 쪼개서 잘 배치하고 잘 움직이게 해주는 게 리액트!!!
+
+View - 
+
+Spring -beckend ( 구조 만들기 좋다 )
+
+jdango -beckend ( 데이터 이동이 아주 빠르다 )
+
+클론코딩으로 인스타그램 따라해보기
+
+리액트 --> 클론코딩 --> 장고 --> rest(api)
+
+뷰 스프링
+
+db - sqllight
+
+- 백엔드는 프레임워크, 라이브러리를 사용할 수도 있다.
+- DB는 데이터를 다루는 일
