@@ -1,27 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
 
-//Style
-const div_root = {'margin':'auto','width':'300px'}
-const div1 = {'width':'120px', 'height':'150px', 'float':'left','bacground-color':'white', 'text-align':'center', 'border-style':'solid', 'border-width':'4px', 'border-color':'green', 'vertical-align':'middle'};
-const RedboxStyle ={'width':'120px', 'height':'150px','float':'right','justifyContent': 'center','alignItems': 'center','border-style':'solid','border-width':'4px','border-color':'red', 'display':'inline'};
-const Middle_align = {}
-
-//source
-const topics = [
-  {id:1, title:'html' , body:'html is...'},
-  {id:2, title:'css' , body:'css is...'},
-  {id:3, title:'js' , body:'js is...'}
-]
-
-//Style Function
-function RedBox(props){
-  return <h3 style= {RedboxStyle} >{props.title}</h3> }
-
- function Divone(props){
-   return <h3 style= {div1}>{props.title}</h3> }
-
-// 3comfonent
+// ---------------------------------------------------
 function Article(props){
   return <article>
     <h2>{props.title}</h2>
@@ -30,8 +11,7 @@ function Article(props){
 
 
 
-
- // 1comfonent
+// ---------------------------------------------------
 function Header(props){
   return <header>
   <h1><a href="/" onClick={(event)=>{
@@ -40,48 +20,67 @@ function Header(props){
   }}>{props.title}</a></h1>
  </header>}
 
- // 2comfonent
+
+
+ // ---------------------------------------------------
 function Nav(props){
-  
-  const lis = []
+    const lis = []
   for(let i=0; i<props.topics.length; i++)
   {let t = props.topics[i];
-    lis.push(<li key={t.id}><a href="{'/read/'+t.id}" id={t.id}>{t.title}</a></li>)
+    lis.push(<li key={t.id}>
+      <a href="{'/read/'+t.id}" onClick={event=>{
+      event.preventDefault();
+      props.onChangeMode(Number(event.target.id));
+      }} id={t.id}>{t.title}</a></li>)
   }
-  return <nav onClick={event=>{
-    event.preventDefault();
-    props.onChangeMode(event.target.id);
-  }}>
+  return <nav>
             <ol>
               {lis}
             </ol>
   </nav>}
-
-// Main
+ 
+// Main-----------------------------------------------
 function App() {
+  const topics = [
+    {id:1, title:'html' , body:'html is...'},
+    {id:2, title:'css' , body:'css is...'},
+    {id:3, title:'js' , body:'js is...'}
+  ]
+
+  // const _mode = useState('WELCOME');
+  // const mode = _mode[0];
+  // const setMode = _mode[1]
+  const [mode, setMode] = useState('WELCOME');
+  const [id, setId] = useState(null);
+
   let content =null;
-  const mode = 'READ';
+
   if (mode==='WELCOME'){
-    content = <Article title="Welome" body="Hello,React"></Article>
+    content = <Article title="Welcome" body="Hello,React"></Article>
   }else if(mode==='READ'){
-    content = <Article title="Read" body="Hello,Read"></Article>
+    let title, body = null;
+    for(let i=0; i<topics.length; i++){
+      // console.log(topics[i].id, id);
+      if(topics[i].id === id){
+        title = topics[i].title;
+        body = topics[i].body;
+      }
+    }
+    content = <Article title={title} body={body}></Article>
   }
   return (
     <div>
-      <Header title="REACT" onChangeMode={()=>{
-        alert('Header');
+      <Header title="WEB" onChangeMode={()=>{
+        setMode('WELCOME');
       }}></Header>
-       <Nav topics={topics} onChangeMode={(id)=>{
-        alert(id);}} ></Nav>
-
+       <Nav topics={topics} onChangeMode={(_id)=>{
+       setMode('READ');
+       setId(_id);
+       }}></Nav>
        {content}
-       <Article body="Yorosiku"></Article>
-       <RedBox title="jwson"></RedBox>
-       <RedBox title="semi"></RedBox>
-       <Divone title='jwson, hello oh This is impressive'></Divone>
 
     </div>
-  );
-}
+  );}
 
+  
 export default App;
