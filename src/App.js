@@ -29,6 +29,11 @@ return <nav>
           </ol>
 </nav>}
 
+function RedBox(props){
+  const RedboxStyle ={'border-style':'solid','border-width':'4px','border-color':'red', 'display':'inline'};
+  return <h3 style= {RedboxStyle} >{props.title}</h3>
+ }
+
 // Main
 function App() {
   const topics = [
@@ -42,6 +47,9 @@ function App() {
        <Nav topics={topics} ></Nav>
        <Article title="Welome" body="Hello,React"></Article>
        <Article body="Yorosiku"></Article>
+       <RedBox title="jwson"></RedBox>
+       <RedBox title="semi"></RedBox>
+
     </div>
   );
 }
