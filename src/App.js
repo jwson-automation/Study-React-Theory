@@ -35,6 +35,18 @@ function Article(props){
     <h2>{props.title}</h2>
     {props.body}
   </article>}
+  // ---------------------------------------------------
+  function Update(props){
+    return <article>
+      <h2>Update</h2>
+  <form onSubmit={event=>{
+    event.preventDefault();
+    const title = event.target.title.value;
+    const body = event.target.body.value;
+    props.onCreate(title, body);
+  }}></form>
+  </article>
+}
 // ---------------------------------------------------
 function Create(props){
   return <article>
@@ -64,9 +76,11 @@ function App() {
   const [mode, setMode] = useState('WELCOME');
   const [id, setId] = useState(null);
   const [nextId, setNextId] = useState(4);
-  
+   
   // content
   let content =null;
+  let contextControl =null;
+
 
   if (mode==='WELCOME'){//----------------------------------------------------------WELCOME 모드
     content = <Article title="Welcome" body="Hello,React"></Article>
@@ -78,8 +92,11 @@ function App() {
         title = topics[i].title;
         body = topics[i].body;
       }
+      
     }
     content = <Article title={title} body={body}></Article>
+    contextControl = <li><a href ={ "/update" +id} onClick={(event)=>{event.preventDefault();
+    setMode('UPDATE')}}>Update</a></li>
   }else if(mode==='CREATE'){ //----------------------------------------------------------CREATE 모드
     content = <Create onCreate={(_title, _body)=>{
         const newTopic = {id:nextId, title:_title, body:_body}
@@ -95,6 +112,8 @@ function App() {
         setId(nextId);
         setNextId(nextId+1);
     }}></Create>
+  }else if(mode==='UPDATE'){
+    <Update></Update>
   }
   return (
     <div>
@@ -106,10 +125,13 @@ function App() {
        setId(_id);
        }}></Nav>
        {content}
-      <a href="/create" onClick={event=>{
+       <ul>
+      <li><a href="/create" onClick={event=>{
         event.preventDefault();
         setMode('CREATE');
-        }}>Create</a>
+        }}>Create</a></li>
+        {contextControl}
+        </ul>
     </div>
   );}
 
